@@ -90,6 +90,7 @@
 	</logger>
 
 	<!-- 过滤jstorm不必要的日志 -->
+	<!-- additivity为false表示不向上级(即root传递日志)，加入改为true，则本级日志打印后，再将日志向上级传递-->
 	<logger name="com.alibaba.jstorm"  level="ERROR" additivity="false">
 		<appender-ref ref="file-business"/>
 		<appender-ref ref="console"/>
