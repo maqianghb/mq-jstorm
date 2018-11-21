@@ -6,17 +6,17 @@
  -->
 <configuration scan="true" scanPeriod="60 seconds" debug="true">
     <!-- 定义变量LOG_HOME用于配置log日志生成的项目主目录 本地用相对路径，部署到服务器用绝对路径/logs/ -->
-    <property name="LOG_HOME" value="/mqCode/logs/mq-jstorm"/>
+    <property name="LOG_HOME" value="/logs/mq-jstorm"/>
     <!--日志文件保留天数-->
     <property name="LOG_MAX_HISTORY" value="30"/>
     <!--系统当天日志文件保存路径-->
     <property name="LOG_SYS_HOME" value="${LOG_HOME}/mq-jstorm-logback-sys.log"/>
     <!--系统滚动日志文件保存路径,可以与当天日志目录不同-->
-    <property name="LOG_SYS_ROLL_HOME" value="${LOG_HOME}/mq-jstorm-logback-sys.log.%d{yyyy-MM-dd}"/>
+    <property name="LOG_SYS_ROLL_HOME" value="${LOG_HOME}/mq-jstorm-logback-sys-%d{yyyy-MM-dd}.log"/>
     <!--业务当天日志文件保存路径-->
     <property name="LOG_BUSI_HOME" value="${LOG_HOME}/mq-jstorm-logback-busi.log"/>
     <!--业务滚动日志文件保存路径,可以与当天日志目录不同-->
-    <property name="LOG_BUSI_ROLL_HOME" value="${LOG_HOME}/mq-jstorm-logback-busi.log.%d{yyyy-MM-dd}"/>
+    <property name="LOG_BUSI_ROLL_HOME" value="${LOG_HOME}/mq-jstorm-logback-busi-%d{yyyy-MM-dd}.log"/>
 
 
     <!-- 定义输出日志的格式
@@ -83,7 +83,20 @@
         <appender-ref ref="console"/>
     </logger>
 
-    <root level="info">
+	<!-- 过滤storm不必要的日志 -->
+	<logger name="backtype.storm"  level="ERROR" additivity="false">
+		<appender-ref ref="file-business"/>
+		<appender-ref ref="console"/>
+	</logger>
+
+	<!-- 过滤jstorm不必要的日志 -->
+	<logger name="com.alibaba.jstorm"  level="ERROR" additivity="false">
+		<appender-ref ref="file-business"/>
+		<appender-ref ref="console"/>
+	</logger>
+
+
+	<root level="info">
         <!--开发环境配置 start -->
         <appender-ref ref="console"/>
         <!--开发环境配置 end -->
