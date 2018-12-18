@@ -19,19 +19,80 @@
 		<java.encoding>UTF-8</java.encoding>
 
 		<jstorm-core.version>2.2.1</jstorm-core.version>
+		<lombok.version>1.16.6</lombok.version>
+		<fastjson.version>1.2.47</fastjson.version>
 		<commons-io.version>2.6</commons-io.version>
+		<commons-collections4.version>4.0</commons-collections4.version>
+		<guava.version>12.0.1</guava.version>
 	</properties>
 
 	<dependencies>
+		<!-- lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.16.6</version>
+			<version>${lombok.version}</version>
 		</dependency>
+
+		<!-- fastjson -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>${fastjson.version}</version>
+		</dependency>
+
+		<!-- commons io -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons-io.version}</version>
+		</dependency>
+
+		<!-- collections -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>${commons-collections4.version}</version>
+		</dependency>
+
+		<!-- spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>4.3.5.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>4.3.5.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>4.3.5.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>4.3.5.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>4.3.5.RELEASE</version>
+		</dependency>
+
+		<!-- guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>12.0.1</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
-		<finalName>mq-jstorm</finalName>
+		<finalName>mq-jstorm-${project.version}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

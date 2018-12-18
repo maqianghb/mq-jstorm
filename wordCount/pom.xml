@@ -13,21 +13,18 @@
 	<artifactId>wordCount</artifactId>
 
 	<dependencies>
+		<!-- jstorm -->
 		<dependency>
 			<groupId>com.alibaba.jstorm</groupId>
 			<artifactId>jstorm-core</artifactId>
 			<version>${jstorm-core.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>${commons-io.version}</version>
-		</dependency>
+
 	</dependencies>
 
 	<build>
-		<finalName>mq-jstorm-wordCount</finalName>
+		<finalName>mq-jstorm-wordCount-${project.version}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

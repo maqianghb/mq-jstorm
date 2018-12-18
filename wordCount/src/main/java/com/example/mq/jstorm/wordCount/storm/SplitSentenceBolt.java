@@ -1,12 +1,11 @@
-package com.example.mq.jstorm.wordCount;
+package com.example.mq.jstorm.wordCount.storm;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
 
 import backtype.storm.task.OutputCollector;
 import backtype.storm.task.TopologyContext;
-import backtype.storm.topology.IRichBolt;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseRichBolt;
 import backtype.storm.tuple.Fields;
@@ -14,6 +13,7 @@ import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import shade.storm.org.apache.commons.lang.StringUtils;
 
 /**
  * @program: mq-demo
@@ -27,30 +27,40 @@ public class SplitSentenceBolt extends BaseRichBolt {
 	private static final Logger LOG = LoggerFactory.getLogger(SplitSentenceBolt.class);
 
 	private OutputCollector collector;
+	private String streamId;
 
+	public SplitSentenceBolt(Properties properties, String streamId) {
+		this.streamId = streamId;
+	}
 
 	@Override
 	public void prepare(Map stormConf, TopologyContext context, OutputCollector collector) {
-		LOG.info("------开始执行 SplitSentenceBolt.");
 		this.collector =collector;
 	}
 
 	@Override
 	public void execute(Tuple input) {
-		String sentence = input.getStringByField("sentence");
-		String[] words = sentence.split(" ");
-		for(String word : words){
-			this.collector.emit(new Values(word));
+		String sentence =null;
+		if(StringUtils.isEmpty(sentence =input.getStringByField("sentence"))){
+			LOG.warn("sentence is empty!");
+			collector.ack(input);
+			return;
 		}
-
-		//确认成功处理一个tuple
+		String[] words = sentence.split(" ");
+		if(Objects.isNull(words) || words.length ==0){
+			collector.ack(input);
+			return;
+		}
+		for(String word : words){
+			this.collector.emit(streamId, new Values(word));
+		}
 		collector.ack(input);
 	}
 
 	@Override
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {
-
-		declarer.declare(new Fields("word"));
+		declarer.declareStream(streamId, new Fields("word"));
 	}
+
 
 }
