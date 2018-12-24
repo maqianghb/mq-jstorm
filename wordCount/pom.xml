@@ -18,6 +18,21 @@
 			<groupId>com.alibaba.jstorm</groupId>
 			<artifactId>jstorm-core</artifactId>
 			<version>${jstorm-core.version}</version>
+			<!--只在编译或测试的时候使用-->
+			<!--<scope>provided</scope>-->
+		</dependency>
+
+		<!--dubbo-->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+			<version>${dubbo.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>httpcore</artifactId>
+					<groupId>org.apache.httpcomponents</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 

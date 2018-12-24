@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	   xmlns="http://www.springframework.org/schema/beans"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<dubbo:application name="mq-jstorm" />
+
+	<!-- bigdata dataBase -->
+	<!--<dubbo:registry id="databaseRegistry" protocol="zookeeper" address="${database.dubbo.registry.address}"/>-->
+
+	<!-- 从注册中心中查找服务 -->
+	<!--<dubbo:reference id="apiService" interface="com.caocao.bigdata.base.service.IApiService" check="false"-->
+					 <!--protocol="dubbo" registry="databaseRegistry" timeout="${database.dubbo.registry.timeout}"/>-->
+
+	<!-- for test -->
+	<!--<dubbo:reference id="apiService" interface="com.caocao.bigdata.base.service.IApiService" url="dubbo://118.178.131.208:12346" timeout="1000"/>-->
+
+
+</beans>

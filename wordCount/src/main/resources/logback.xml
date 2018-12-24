@@ -62,8 +62,8 @@
     </appender>
 
 	<!-- 过滤jstorm不必要的日志 -->
-	<logger name="com.alibaba.jstorm"  level="ERROR" additivity="false">
-		<appender-ref ref="console" />
+	<logger name="com.alibaba.jstorm"  level="WARN" additivity="false">
+		<!--<appender-ref ref="console" />-->
 		<appender-ref ref="info" />
 		<appender-ref ref="error" />
 	</logger>

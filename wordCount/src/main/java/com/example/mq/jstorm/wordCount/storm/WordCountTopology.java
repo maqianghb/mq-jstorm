@@ -12,7 +12,8 @@ import backtype.storm.StormSubmitter;
 import backtype.storm.topology.TopologyBuilder;
 import backtype.storm.topology.base.BaseWindowedBolt;
 import backtype.storm.tuple.Fields;
-import com.example.mq.jstorm.wordCount.util.PropertiesUtil;
+import com.example.mq.jstorm.wordCount.util.MqJstormConfigurer;
+import com.example.mq.jstorm.wordCount.util.SpringContextUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,9 +35,12 @@ public class WordCountTopology {
 
 	public static void main(String[] args) throws Exception{
 		Long startTime =System.currentTimeMillis();
+		//load properties
 		Properties properties = null;
 		try {
-			properties = PropertiesUtil.loadProperties("application.properties");
+			SpringContextUtil.init();
+			MqJstormConfigurer configurer =SpringContextUtil.getBean("mqJstormConfig", MqJstormConfigurer.class);
+			properties = configurer.getProperties();
 		} catch (Exception e) {
 			LOG.error("load properties err!", e);
 			return;
@@ -46,12 +50,14 @@ public class WordCountTopology {
 			return;
 		}
 
+		//create and submit topology
 		TopologyBuilder builder =createTopologyBuilder(properties);
 		Config config =new Config();
 		if( !Objects.isNull(args) && args.length>0){
+			LOG.info("begin submit topology to remoteCluster!");
 			//线上集群模式
-			config.setNumWorkers(4);
-			config.setNumAckers(4);
+			config.setNumWorkers(2);
+			config.setNumAckers(2);
 			config.setMessageTimeoutSecs(3);
 			config.put(Config.TOPOLOGY_MAX_SPOUT_PENDING, 500);
 			config.put(Config.TOPOLOGY_WORKER_MAX_HEAP_SIZE_MB, 1024);
@@ -62,8 +68,8 @@ public class WordCountTopology {
 				return;
 			}
 		}else{
+			LOG.info("begin submit topology to localCluster!");
 			//本地模式
-			config.setNumWorkers(2);
 			LocalCluster cluster=new LocalCluster();
 			try {
 				cluster.submitTopology(TOPOLOGY_NAME,config,builder.createTopology());
@@ -71,12 +77,8 @@ public class WordCountTopology {
 				LOG.error("topology submit err, topologyName:{}", TOPOLOGY_NAME, e);
 				return;
 			}
-
-//			Thread.sleep(60* 1000);
-//			cluster.killTopology(TOPOLOGY_NAME);
-
-
 		}
+
 		LOG.info("------start topology success, costTime:{}", System.currentTimeMillis()-startTime);
 	}
 
