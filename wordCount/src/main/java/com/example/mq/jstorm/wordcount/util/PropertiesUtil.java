@@ -1,4 +1,4 @@
-package com.example.mq.jstorm.wordCount.util;
+package com.example.mq.jstorm.wordcount.util;
 
 import java.io.IOException;
 import java.io.InputStream;

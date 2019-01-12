@@ -1,11 +1,10 @@
-package com.example.mq.jstorm.wordCount.storm;
+package com.example.mq.jstorm.wordcount.storm;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Properties;
 
 import backtype.storm.task.OutputCollector;

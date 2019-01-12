@@ -8,7 +8,7 @@
 	<context:component-scan base-package="com.example.mq.jstorm"/>
 
 	<!--本地配置读取-->
-	<bean id="mqJstormConfig" class="com.example.mq.jstorm.wordCount.util.MqJstormConfigurer">
+	<bean id="mqJStormConfigurer" class="com.example.mq.jstorm.wordcount.util.MqJStormPlaceholderConfigurer">
 		<constructor-arg name="filePath" value="application.properties" />
 	</bean>
 
