@@ -1,4 +1,4 @@
-package com.example.mq.jstorm.wordCount.storm;
+package com.example.mq.jstorm.wordcount.storm;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseRichSpout;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
-import com.example.mq.jstorm.wordCount.util.SnowflakeIdWorker;
+import com.example.mq.jstorm.wordcount.util.SnowflakeIdWorker;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

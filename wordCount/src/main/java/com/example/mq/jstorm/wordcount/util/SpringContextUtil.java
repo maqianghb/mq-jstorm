@@ -1,4 +1,4 @@
-package com.example.mq.jstorm.wordCount.util;
+package com.example.mq.jstorm.wordcount.util;
 
 import java.util.Objects;
 
@@ -17,16 +17,26 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class SpringContextUtil {
 	private static final String SPRING_XML_NAME ="spring-bean.xml" ;
-	private static ApplicationContext applicationContext =null;
+	private static volatile ApplicationContext applicationContext =null;
 
-	public static synchronized void init(){
-		if(Objects.isNull(applicationContext)){
-			applicationContext =new ClassPathXmlApplicationContext(SPRING_XML_NAME);
+	private static synchronized void init(){
+		if (null ==applicationContext){
+			synchronized(SpringContextUtil.class){
+				if(null ==applicationContext){
+					applicationContext =new ClassPathXmlApplicationContext(SPRING_XML_NAME);
+					String[] beanNames =applicationContext.getBeanDefinitionNames();
+					if(null !=beanNames && beanNames.length >0){
+						for(int i=0; i<beanNames.length; i++){
+							System.out.println("------ beanName: " + beanNames[i]);
+						}
+					}
+				}
+			}
 		}
 	}
 
 	public static ApplicationContext getApplicationContext() {
-		if(Objects.isNull(applicationContext)){
+		if(null ==applicationContext){
 			init();
 		}
 		return applicationContext;

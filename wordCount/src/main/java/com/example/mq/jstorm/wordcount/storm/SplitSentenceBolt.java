@@ -1,4 +1,4 @@
-package com.example.mq.jstorm.wordCount.storm;
+package com.example.mq.jstorm.wordcount.storm;
 
 import java.util.Map;
 import java.util.Objects;

@@ -7,15 +7,16 @@
 
 	<dubbo:application name="mq-jstorm" />
 
-	<!-- bigdata dataBase -->
-	<!--<dubbo:registry id="databaseRegistry" protocol="zookeeper" address="${database.dubbo.registry.address}"/>-->
+	<!--<dubbo:registry id="sellerRegistry" protocol="${seller.dubbo.registry.protocol}" address="${seller.dubbo.registry.address}"-->
+					<!--check="seller.dubbo.registry.check" default="false"/>-->
 
-	<!-- 从注册中心中查找服务 -->
-	<!--<dubbo:reference id="apiService" interface="com.caocao.bigdata.base.service.IApiService" check="false"-->
-					 <!--protocol="dubbo" registry="databaseRegistry" timeout="${database.dubbo.registry.timeout}"/>-->
+	<!-- seller消费接口实例 -->
+	<!--<dubbo:reference id="sellerQueryApi" protocol="dubbo" interface="com.example.mq.api.SellerQueryApi"-->
+	<!--registry="sellerRegistry"  timeout="${seller.dubbo.registry.timeout}"-->
+	<!--check="${seller.dubbo.registry.check}" retries="${config.dubbo.registry.retries}"-->
+	<!--version="${seller.dubbo.reference.version}"/>-->
 
 	<!-- for test -->
-	<!--<dubbo:reference id="apiService" interface="com.caocao.bigdata.base.service.IApiService" url="dubbo://118.178.131.208:12346" timeout="1000"/>-->
 
 
 </beans>
