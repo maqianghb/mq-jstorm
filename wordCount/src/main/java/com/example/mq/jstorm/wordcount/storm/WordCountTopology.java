@@ -52,7 +52,7 @@ public class WordCountTopology {
 		//create and submit topology
 		TopologyBuilder builder =createTopologyBuilder(properties);
 		Config config =new Config();
-		if( !Objects.isNull(args) && args.length>0){
+		if( null !=args && args.length>0){
 			LOG.info("begin submit topology to remoteCluster!");
 			//线上集群模式
 			config.setNumWorkers(2);
