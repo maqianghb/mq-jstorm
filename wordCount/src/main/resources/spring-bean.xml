@@ -8,10 +8,10 @@
 	<context:component-scan base-package="com.example.mq.jstorm"/>
 
 	<!--本地配置读取-->
-	<bean id="mqJStormConfigurer" class="com.example.mq.jstorm.wordcount.util.MqJStormPlaceholderConfigurer">
+	<bean id="localPropertiesConfigurer" class="com.example.mq.jstorm.wordcount.util.LocalPropertiesConfigurer">
 		<constructor-arg name="filePath" value="application.properties" />
 	</bean>
 
-	<import resource="classpath*:dubbo-consumer.xml"/>
+	<import resource="classpath*:dubbo/dubbo-consumer.xml"/>
 
 </beans>

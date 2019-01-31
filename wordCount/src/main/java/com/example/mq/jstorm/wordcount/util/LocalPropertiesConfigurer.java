@@ -1,11 +1,9 @@
 package com.example.mq.jstorm.wordcount.util;
 
-import java.io.InputStream;
 import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import shade.storm.org.apache.commons.lang.StringUtils;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -18,38 +16,44 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
  * @create: 2018/12/18
  *
  */
-public class MqJStormPlaceholderConfigurer extends PropertyPlaceholderConfigurer {
-    private static final Logger LOG = LoggerFactory.getLogger(MqJStormPlaceholderConfigurer.class);
+public class LocalPropertiesConfigurer extends PropertyPlaceholderConfigurer {
+    private static final Logger LOG = LoggerFactory.getLogger(LocalPropertiesConfigurer.class);
 
     private String applicationFilePath;
 
-    private Properties mqJStormProperties;
+    private Properties localProperties;
 
-    public MqJStormPlaceholderConfigurer(String filePath) {
+    public LocalPropertiesConfigurer(String filePath) {
         super();
         this.applicationFilePath = filePath;
     }
 
-	public Properties getMqJStormProperties() {
-		return mqJStormProperties;
+	public Properties getLocalProperties() {
+		return localProperties;
 	}
 
 	@Override
     protected void processProperties(ConfigurableListableBeanFactory beanFactoryToProcess, Properties properties)
             throws BeansException {
         try {
-            InputStream in = ClassLoader.getSystemResourceAsStream(applicationFilePath);
-            properties.load(in);
-            String propertiesPath = properties.getProperty("file.path.properties.name");
-            if(StringUtils.isEmpty(propertiesPath)){
-				LOG.error("file path is empty, propertiesPath:{}", propertiesPath);
+            Properties tmpProp1 = PropertiesUtil.loadProperties(applicationFilePath);
+            if(null == tmpProp1){
+				LOG.error("could not get Properties, filePath:{}", applicationFilePath);
 				return;
 			}
-			this.mqJStormProperties =PropertiesUtil.loadProperties(propertiesPath);
+            PropertiesUtil.addProperties(properties, tmpProp1);
+            String propertiesPath = properties.getProperty("file.path.properties.name");
+			Properties tmpProp2 =PropertiesUtil.loadProperties(propertiesPath);
+            if(null ==tmpProp2){
+				LOG.error("localProperties is empty, propertiesPath:{}", propertiesPath);
+				return;
+			}
+			PropertiesUtil.addProperties(properties, tmpProp2);
+            this.localProperties =properties;
         } catch (Exception e) {
 			LOG.error("load properties err, applicationFilePath:{}", applicationFilePath, e);
         }
-        super.processProperties(beanFactoryToProcess, mqJStormProperties);
+        super.processProperties(beanFactoryToProcess, properties);
     }
 
 }

@@ -12,7 +12,7 @@ import backtype.storm.StormSubmitter;
 import backtype.storm.topology.TopologyBuilder;
 import backtype.storm.topology.base.BaseWindowedBolt;
 import backtype.storm.tuple.Fields;
-import com.example.mq.jstorm.wordcount.util.MqJStormPlaceholderConfigurer;
+import com.example.mq.jstorm.wordcount.util.LocalPropertiesConfigurer;
 import com.example.mq.jstorm.wordcount.util.SpringContextUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,8 +38,8 @@ public class WordCountTopology {
 		//load properties
 		Properties properties = null;
 		try {
-			MqJStormPlaceholderConfigurer mqJStormConfigurer =SpringContextUtil.getBean("mqJStormConfigurer", MqJStormPlaceholderConfigurer.class);
-			properties = mqJStormConfigurer.getMqJStormProperties();
+			LocalPropertiesConfigurer localPropertiesConfigurer =SpringContextUtil.getBean("localPropertiesConfigurer", LocalPropertiesConfigurer.class);
+			properties = localPropertiesConfigurer.getLocalProperties();
 		} catch (Exception e) {
 			LOG.error("load properties err!", e);
 			return;
