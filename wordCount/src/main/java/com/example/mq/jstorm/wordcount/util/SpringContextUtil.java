@@ -24,12 +24,6 @@ public class SpringContextUtil {
 			synchronized(SpringContextUtil.class){
 				if(null ==applicationContext){
 					applicationContext =new ClassPathXmlApplicationContext(SPRING_XML_NAME);
-					String[] beanNames =applicationContext.getBeanDefinitionNames();
-					if(null !=beanNames && beanNames.length >0){
-						for(int i=0; i<beanNames.length; i++){
-							System.out.println("------ beanName: " + beanNames[i]);
-						}
-					}
 				}
 			}
 		}

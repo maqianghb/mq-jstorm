@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	   xmlns="http://www.springframework.org/schema/beans"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<dubbo:application name="mq-jstorm-word-count" />
+
+	<!--
+	<dubbo:registry id="sellerRegistry"  address="${seller.dubbo.registry.address}"
+					protocol="${seller.dubbo.registry.protocol}" check="seller.dubbo.registry.check"
+					default="false"/>
+	-->
+
+	<!-- seller消费接口实例 -->
+	<!--
+	<dubbo:reference id="sellerQueryApi"  interface="com.example.mq.api.SellerQueryApi"
+					 protocol="dubbo" registry="sellerRegistry" timeout="${seller.dubbo.registry.timeout}"
+					 check="${seller.dubbo.registry.check}" retries="${config.dubbo.registry.retries}"
+					 version="${seller.dubbo.reference.version}"/>
+	-->
+
+	<!-- for test -->
+	<!--
+	<dubbo:reference id="sellerQueryApi" interface="com.example.mq.api.SellerQueryApi"
+					 url="dubbo://127.0.0.1:12345" timeout="3000"/>
+	-->
+
+</beans>
