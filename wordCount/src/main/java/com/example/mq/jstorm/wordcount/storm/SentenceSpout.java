@@ -35,7 +35,7 @@ public class SentenceSpout extends BaseRichSpout {
 	private SpoutOutputCollector collector;
 	private Properties properties;
 	private String streamId;
-	private int maxLoop =100;
+	private int maxLoop =3;
 	private List<String> sentences =new ArrayList<>();
 
 	public SentenceSpout(Properties properties, String streamId){
@@ -57,6 +57,7 @@ public class SentenceSpout extends BaseRichSpout {
 		} catch (Exception e) {
 			LOG.error("文件读取失败，wordsFile:{}", wordsFile, e);
 		}
+
 	}
 
 	@Override
@@ -66,12 +67,13 @@ public class SentenceSpout extends BaseRichSpout {
 				Long messageId =idWorker.nextId();
 				collector.emit(streamId, new Values(sentence), messageId);
 			}
-			//循环依次休眠10ms
-			try {
-				Thread.sleep(2*1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+		}
+
+		try {
+			//每次执行间隔30s
+			Thread.sleep(30 * 1000);
+		}catch (Exception e){
+			LOG.error("thread sleep err!", e);
 		}
 	}
 
