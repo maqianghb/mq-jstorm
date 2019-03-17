@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true" scanPeriod="60 seconds" debug="true">
+
+    <property name="LOG_HOME" value="/logs/mq-jstorm"/>
+    <property name="LOG_MAX_HISTORY" value="15"/>
+    <property name="INFO_LOG_HOME" value="${LOG_HOME}/monitor-info.log"/>
+    <property name="INFO_LOG_ROLL_HOME" value="${LOG_HOME}/monitor-info-%d{yyyy-MM-dd}.log"/>
+    <property name="ERROR_LOG_HOME" value="${LOG_HOME}/monitor-error.log"/>
+    <property name="ERROR_LOG_ROLL_HOME" value="${LOG_HOME}/monitor-error-%d{yyyy-MM-dd}.log"/>
+
+
+    <!-- 定义输出日志的格式
+       %d{yyyy-MM-dd  HH:mm:ss.SSS} 定义日期格式兼容java.text.SimpleDateFormat语法 2014-03-25 14:06:49.812
+       %thread 输出产生日志的线程名
+       %-5level 输出日志级别
+       %logger{80}设置为80表示只输入logger最右边点符号之后的字符串，从最后一个标点符号往前数
+       %msg 输出应用程序提供的信息
+       %n输出平台相关的分行符“\n”或者“\r\n”
+     -->
+    <property name="ENCODER_PATTERN" value="[%d{HH:mm:ss.SSS}][%-5level][%thread] %class{36}-%line : %msg%n"/>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+			<pattern>${ENCODER_PATTERN}</pattern>
+			<charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${INFO_LOG_HOME}</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${INFO_LOG_ROLL_HOME}</fileNamePattern>
+            <maxHistory>${LOG_MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${ENCODER_PATTERN}</pattern>
+			<charset>UTF-8</charset>
+        </encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>DENY</onMatch>
+			<onMismatch>ACCEPT</onMismatch>
+		</filter>
+    </appender>
+
+    <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${ERROR_LOG_HOME}</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${ERROR_LOG_ROLL_HOME}</fileNamePattern>
+            <maxHistory>${LOG_MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${ENCODER_PATTERN}</pattern>
+			<charset>UTF-8</charset>
+        </encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印错误日志 -->
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+    </appender>
+
+	<!-- 过滤jstorm不必要的日志 -->
+	<logger name="com.alibaba.jstorm"  level="WARN" additivity="false">
+		<!--<appender-ref ref="console" />-->
+		<appender-ref ref="info" />
+		<appender-ref ref="error" />
+	</logger>
+
+	<root level="info">
+        <!--<appender-ref ref="console" />-->
+		<appender-ref ref="info" />
+		<appender-ref ref="error" />
+    </root>
+</configuration>

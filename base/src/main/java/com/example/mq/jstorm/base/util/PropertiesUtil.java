@@ -1,4 +1,4 @@
-package com.example.mq.jstorm.wordcount.util;
+package com.example.mq.jstorm.base.util;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,21 +6,20 @@ import java.util.Enumeration;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import shade.storm.org.apache.commons.lang.StringUtils;
 
 /**
- * @program: mq-jstorm
+ * @program: mq-code
  * @description: ${description}
  * @author: maqiang
- * @create: 2018/12/18
+ * @create: 2019/1/3
  *
  */
 
 public class PropertiesUtil {
 	private static final Logger LOG = LoggerFactory.getLogger(PropertiesUtil.class);
-
 
 	public static Properties loadProperties(String fileName) {
 		if(StringUtils.isEmpty(fileName)){
@@ -30,9 +29,9 @@ public class PropertiesUtil {
 		try {
 			//第一种写法会读不到文件
 //			InputStream inputStream =ClassLoader.getSystemResourceAsStream(fileName);
-			InputStream inputStream =PropertiesUtil.class.getClassLoader().getResourceAsStream(fileName);
-			if(null !=inputStream){
-				prop.load(inputStream);
+			InputStream inStream = PropertiesUtil.class.getClassLoader().getResourceAsStream(fileName);
+			if(null !=inStream){
+				prop.load(inStream);
 				return prop;
 			}
 		} catch (IOException e) {

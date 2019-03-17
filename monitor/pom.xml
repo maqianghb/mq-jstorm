@@ -10,7 +10,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.example.mq.jstorm</groupId>
-	<artifactId>wordCount</artifactId>
+	<artifactId>monitor</artifactId>
 
 	<dependencies>
 		<dependency>
@@ -30,50 +30,26 @@
 					<groupId>ch.qos.logback</groupId>
 				</exclusion>
 			</exclusions>
-			<!--只在编译或测试的时候使用-->
-			<!--<scope>provided</scope>-->
+			<!--只在编译或测试的时候开启-->
+			<scope>provided</scope>
 		</dependency>
 
-		<!--dubbo-->
 		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>dubbo</artifactId>
-			<version>${dubbo.version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>spring-context</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>spring-core</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>spring-aop</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>spring-beans</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>spring-expression</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-			</exclusions>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>RELEASE</version>
 		</dependency>
 
 	</dependencies>
 
-
 	<build>
-		<finalName>mq-jstorm-word-count-${project.version}</finalName>
+		<finalName>mq-jstorm-monitor-${project.version}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.example.mq.jstorm.wordcount.WordCountTopology</mainClass>
+					<mainClass>com.example.mq.jstorm.monitor.MonitorTopology</mainClass>
 				</configuration>
 				<executions>
 					<execution>

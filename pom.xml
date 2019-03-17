@@ -4,70 +4,77 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.example.mq</groupId>
-	<artifactId>jstorm</artifactId>
+	<groupId>com.example.mq.jstorm</groupId>
+	<artifactId>mq-jstorm</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0.1</version>
+	<version>1.0.1-SNAPSHOT</version>
+
 	<modules>
+		<module>base</module>
 		<module>wordCount</module>
+		<module>monitor</module>
 	</modules>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 		<java.version>1.8</java.version>
 		<java.encoding>UTF-8</java.encoding>
 
+		<spring-context.version>5.1.5.RELEASE</spring-context.version>
+		<logback-classic.version>1.1.8</logback-classic.version>
+		<junit.version>4.12</junit.version>
+		<guava.version>12.0.1</guava.version>
 		<jstorm-core.version>2.2.1</jstorm-core.version>
 		<lombok.version>1.16.6</lombok.version>
 		<fastjson.version>1.2.47</fastjson.version>
 		<commons-io.version>2.6</commons-io.version>
+		<commons-lang3.version>3.3.1</commons-lang3.version>
 		<commons-collections4.version>4.0</commons-collections4.version>
 		<guava.version>12.0.1</guava.version>
+		<mongo.java.driver.version>3.6.4</mongo.java.driver.version>
 		<dubbo.version>2.5.8</dubbo.version>
 	</properties>
 
 	<dependencies>
-		<!-- lombok -->
+		<!-- spring-context -->
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>${lombok.version}</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring-context.version}</version>
 		</dependency>
 
-		<!-- fastjson -->
+		<!-- logback -->
 		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-			<version>${fastjson.version}</version>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback-classic.version}</version>
 		</dependency>
 
-		<!-- commons io -->
+		<!-- junit -->
 		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>${commons-io.version}</version>
-		</dependency>
-
-		<!-- collections -->
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-collections4</artifactId>
-			<version>${commons-collections4.version}</version>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
 		</dependency>
 
 		<!-- guava -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>12.0.1</version>
+			<version>${guava.version}</version>
 		</dependency>
 
 	</dependencies>
 
+
 	<build>
 		<finalName>mq-jstorm-${project.version}</finalName>
 		<plugins>
+			<!--maven-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -75,10 +82,38 @@
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 					<encoding>${java.encoding}</encoding>
+					<compilerArgument>-Xlint:all</compilerArgument>
 					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>false</skip>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 		</plugins>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+
 	</build>
 
 

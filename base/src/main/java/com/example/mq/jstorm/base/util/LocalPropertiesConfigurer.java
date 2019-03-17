@@ -1,4 +1,4 @@
-package com.example.mq.jstorm.wordcount.util;
+package com.example.mq.jstorm.base.util;
 
 import java.util.Properties;
 

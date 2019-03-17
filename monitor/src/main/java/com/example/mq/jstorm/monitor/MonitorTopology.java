@@ -1,6 +1,4 @@
-package com.example.mq.jstorm.wordcount.storm;
-
-
+package com.example.mq.jstorm.monitor;
 
 import java.util.Objects;
 import java.util.Properties;
@@ -11,24 +9,23 @@ import backtype.storm.LocalCluster;
 import backtype.storm.StormSubmitter;
 import backtype.storm.topology.TopologyBuilder;
 import backtype.storm.topology.base.BaseWindowedBolt;
-import backtype.storm.tuple.Fields;
-import com.example.mq.jstorm.wordcount.util.LocalPropertiesConfigurer;
-import com.example.mq.jstorm.wordcount.util.SpringContextUtil;
+import com.example.mq.jstorm.base.util.LocalPropertiesConfigurer;
+import com.example.mq.jstorm.base.util.SpringContextUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @program: mq-demo
- * @description: 单词统计拓扑
+ * @program: mq-jstorm
+ * @description: ${description}
  * @author: maqiang
- * @create: 2018/9/4
+ * @create: 2019/3/15
  *
  */
 
-public class WordCountTopology {
-	private static Logger LOG = LoggerFactory.getLogger(WordCountTopology.class);
+public class MonitorTopology {
+	private static Logger LOG = LoggerFactory.getLogger(MonitorTopology.class);
 
-	private static final String TOPOLOGY_NAME ="word-count-topology";
+	private static final String TOPOLOGY_NAME ="monitor-topology";
 	private static final String SENTENCE_SPOUT_ID ="sentence-spout";
 	private static final String SPLIT_BOLT_ID ="split-bolt";
 	private static final String COUNT_BOLT_ID ="count-bolt";
@@ -38,7 +35,7 @@ public class WordCountTopology {
 		//load properties
 		Properties properties = null;
 		try {
-			LocalPropertiesConfigurer localPropertiesConfigurer =SpringContextUtil.getBean("localPropertiesConfigurer", LocalPropertiesConfigurer.class);
+			LocalPropertiesConfigurer localPropertiesConfigurer = SpringContextUtil.getBean("localPropertiesConfigurer", LocalPropertiesConfigurer.class);
 			properties = localPropertiesConfigurer.getLocalProperties();
 		} catch (Exception e) {
 			LOG.error("load properties err!", e);
@@ -89,16 +86,6 @@ public class WordCountTopology {
 
 		//拓扑构建
 		TopologyBuilder builder =new TopologyBuilder();
-		String sentenceStreamId ="sentenceStream";
-		builder.setSpout(SENTENCE_SPOUT_ID, new SentenceSpout(properties, sentenceStreamId), 2)
-				.setNumTasks(2);
-		String wordStreamId ="workStream";
-		builder.setBolt(SPLIT_BOLT_ID, new SplitSentenceBolt(properties, wordStreamId), 2)
-				.setNumTasks(2)
-				.fieldsGrouping(SENTENCE_SPOUT_ID, sentenceStreamId, new Fields("sentence"));
-		builder.setBolt(COUNT_BOLT_ID, new WordCountBolt(properties), 2)
-				.setNumTasks(2)
-				.fieldsGrouping(SPLIT_BOLT_ID, wordStreamId, new Fields("word"));
 
 		return builder;
 	}

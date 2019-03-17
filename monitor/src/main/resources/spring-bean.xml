@@ -12,6 +12,4 @@
 		<constructor-arg name="filePath" value="application.properties" />
 	</bean>
 
-	<import resource="classpath*:dubbo/dubbo-consumer.xml"/>
-
 </beans>

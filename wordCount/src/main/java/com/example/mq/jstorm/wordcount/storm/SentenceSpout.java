@@ -12,7 +12,7 @@ import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseRichSpout;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
-import com.example.mq.jstorm.wordcount.util.SnowflakeIdWorker;
+import com.example.mq.jstorm.base.util.SnowflakeIdWorker;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
