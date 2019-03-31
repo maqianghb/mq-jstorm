@@ -9,8 +9,11 @@ import backtype.storm.LocalCluster;
 import backtype.storm.StormSubmitter;
 import backtype.storm.topology.TopologyBuilder;
 import backtype.storm.topology.base.BaseWindowedBolt;
+import backtype.storm.tuple.Fields;
 import com.example.mq.jstorm.base.util.LocalPropertiesConfigurer;
 import com.example.mq.jstorm.base.util.SpringContextUtil;
+import com.example.mq.jstorm.monitor.storm.MonitorBolt;
+import com.example.mq.jstorm.monitor.storm.NullSpout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,10 +28,9 @@ import org.slf4j.LoggerFactory;
 public class MonitorTopology {
 	private static Logger LOG = LoggerFactory.getLogger(MonitorTopology.class);
 
-	private static final String TOPOLOGY_NAME ="monitor-topology";
-	private static final String SENTENCE_SPOUT_ID ="sentence-spout";
-	private static final String SPLIT_BOLT_ID ="split-bolt";
-	private static final String COUNT_BOLT_ID ="count-bolt";
+	private static final String TOPOLOGY_NAME ="monitor_topology";
+	private static final String NULL_SPOUT_ID ="null_spout";
+	private static final String MONITOR_BOLT_ID ="monitor_bolt";
 
 	public static void main(String[] args) throws Exception{
 		Long startTime =System.currentTimeMillis();
@@ -86,6 +88,13 @@ public class MonitorTopology {
 
 		//拓扑构建
 		TopologyBuilder builder =new TopologyBuilder();
+		String spoutStreamId ="nullSpout";
+		builder.setSpout(NULL_SPOUT_ID, new NullSpout(spoutStreamId), 2)
+				.setNumTasks(2);
+		String boltStreamId ="monitorBolt";
+		builder.setBolt(MONITOR_BOLT_ID, new MonitorBolt(boltStreamId), 2)
+				.setNumTasks(2)
+				.fieldsGrouping(NULL_SPOUT_ID, spoutStreamId, new Fields("nullSpoutMessage"));
 
 		return builder;
 	}

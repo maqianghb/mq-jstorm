@@ -20,7 +20,12 @@ public class MonitorBolt implements IRichBolt {
 	private static final int TIME_LIMIT_MILLIS =200;
 
     protected OutputCollector collector;
+    private String streamId;
     private MonitorService monitorService;
+
+    public MonitorBolt(String streamId){
+        this.streamId =streamId;
+    }
 
     @Override
     public void declareOutputFields(OutputFieldsDeclarer outputFieldsDeclarer) {
