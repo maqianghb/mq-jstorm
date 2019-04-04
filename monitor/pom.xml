@@ -31,7 +31,7 @@
 				</exclusion>
 			</exclusions>
 			<!--只在编译或测试的时候开启-->
-			<scope>provided</scope>
+			<!--<scope>provided</scope>-->
 		</dependency>
 
 		<dependency>
