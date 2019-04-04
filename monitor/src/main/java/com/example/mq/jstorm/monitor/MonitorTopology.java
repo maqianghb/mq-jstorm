@@ -28,9 +28,9 @@ import org.slf4j.LoggerFactory;
 public class MonitorTopology {
 	private static Logger LOG = LoggerFactory.getLogger(MonitorTopology.class);
 
-	private static final String TOPOLOGY_NAME ="monitor_topology";
-	private static final String NULL_SPOUT_ID ="null_spout";
-	private static final String MONITOR_BOLT_ID ="monitor_bolt";
+	private static final String MONITOR_TOPOLOGY_NAME ="monitor-topology";
+	private static final String NULL_SPOUT_ID ="null-spout";
+	private static final String MONITOR_BOLT_ID ="monitor-bolt";
 
 	public static void main(String[] args) throws Exception{
 		Long startTime =System.currentTimeMillis();
@@ -60,9 +60,9 @@ public class MonitorTopology {
 			config.put(Config.TOPOLOGY_MAX_SPOUT_PENDING, 500);
 			config.put(Config.TOPOLOGY_WORKER_MAX_HEAP_SIZE_MB, 1024);
 			try {
-				StormSubmitter.submitTopology(TOPOLOGY_NAME,config,builder.createTopology());
+				StormSubmitter.submitTopology(MONITOR_TOPOLOGY_NAME,config,builder.createTopology());
 			} catch (Exception e) {
-				LOG.error("topology submit err, topologyName:{}", TOPOLOGY_NAME, e);
+				LOG.error("topology submit err, topologyName:{}", MONITOR_TOPOLOGY_NAME, e);
 				return;
 			}
 		}else{
@@ -70,9 +70,9 @@ public class MonitorTopology {
 			//本地模式
 			LocalCluster cluster=new LocalCluster();
 			try {
-				cluster.submitTopology(TOPOLOGY_NAME,config,builder.createTopology());
+				cluster.submitTopology(MONITOR_TOPOLOGY_NAME,config,builder.createTopology());
 			} catch (Exception e) {
-				LOG.error("topology submit err, topologyName:{}", TOPOLOGY_NAME, e);
+				LOG.error("topology submit err, topologyName:{}", MONITOR_TOPOLOGY_NAME, e);
 				return;
 			}
 		}
