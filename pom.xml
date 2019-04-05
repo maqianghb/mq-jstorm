@@ -11,7 +11,7 @@
 
 	<modules>
 		<module>base</module>
-		<module>wordCount</module>
+		<module>word-count</module>
 		<module>monitor</module>
 	</modules>
 
