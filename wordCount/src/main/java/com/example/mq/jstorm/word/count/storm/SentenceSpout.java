@@ -35,7 +35,7 @@ public class SentenceSpout extends BaseRichSpout {
 	private SpoutOutputCollector collector;
 	private Properties properties;
 	private String streamId;
-	private int maxLoop =3;
+	private int maxLoop =1;
 	private List<String> sentences =new ArrayList<>();
 
 	public SentenceSpout(Properties properties, String streamId){
