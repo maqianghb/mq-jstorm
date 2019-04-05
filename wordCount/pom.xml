@@ -73,7 +73,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.example.mq.jstorm.wordcount.WordCountTopology</mainClass>
+					<mainClass>com.example.mq.jstorm.word.count.WordCountTopology</mainClass>
 				</configuration>
 				<executions>
 					<execution>
