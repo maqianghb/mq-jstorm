@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<configuration scan="true" scanPeriod="60 seconds" debug="true">
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
 
     <property name="LOG_HOME" value="/logs/mq-jstorm"/>
     <property name="LOG_MAX_HISTORY" value="15"/>

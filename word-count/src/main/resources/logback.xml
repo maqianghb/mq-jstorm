@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<configuration scan="true" scanPeriod="60 seconds" debug="true">
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
 
     <property name="LOG_HOME" value="/logs/mq-jstorm"/>
     <property name="LOG_MAX_HISTORY" value="15"/>
-    <property name="INFO_LOG_HOME" value="${LOG_HOME}/mq-jstorm-info.log"/>
-    <property name="INFO_LOG_ROLL_HOME" value="${LOG_HOME}/mq-jstorm-info-%d{yyyy-MM-dd}.log"/>
-    <property name="ERROR_LOG_HOME" value="${LOG_HOME}/mq-jstorm-error.log"/>
-    <property name="ERROR_LOG_ROLL_HOME" value="${LOG_HOME}/mq-jstorm-error-%d{yyyy-MM-dd}.log"/>
+    <property name="INFO_LOG_HOME" value="${LOG_HOME}/word-count-info.log"/>
+    <property name="INFO_LOG_ROLL_HOME" value="${LOG_HOME}/word-count-info-%d{yyyy-MM-dd}.log"/>
+    <property name="ERROR_LOG_HOME" value="${LOG_HOME}/word-count-error.log"/>
+    <property name="ERROR_LOG_ROLL_HOME" value="${LOG_HOME}/word-count-error-%d{yyyy-MM-dd}.log"/>
 
 
     <!-- 定义输出日志的格式
