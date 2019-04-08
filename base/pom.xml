@@ -48,6 +48,13 @@
 			<version>${commons-collections4.version}</version>
 		</dependency>
 
+		<!-- guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
+		</dependency>
+
 		<!-- mongo -->
 		<dependency>
 			<groupId>org.mongodb</groupId>
